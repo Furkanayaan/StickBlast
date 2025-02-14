@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour {
     private List<Transform> _allShape = new();
     private List<bool> _isShapeAtPosition = new();
     private Color _randomColor;
-    private bool _isStopMovement = false;
+    
     public List<bool> _successPlatform = new();
     private Vector3 _offset;
     private bool _isDragging = false;
@@ -358,7 +358,7 @@ public class GridManager : MonoBehaviour {
         }
     }
     private void Update() {
-        if(_isStopMovement) return;
+        if(UIManager.I.IsStopMovement()) return;
         HandleShapeDragging();
         MoveShapesToSpawnPosition();
         AnimateMainObjectColor();
@@ -366,7 +366,6 @@ public class GridManager : MonoBehaviour {
         CheckFailCondition();
         if (_isFail) {
             StartCoroutine(UIManager.I.ActiveFailUI());
-            _isStopMovement = true;
             _isFail = false;
         }
     }
@@ -1094,8 +1093,6 @@ public class GridManager : MonoBehaviour {
         //If the shapes are at the designated position and there is no valid place for them in the grid.
         if (_successPlatform.TrueForAll(sp => !sp) && _isShapeAtPosition.TrueForAll(sp => sp)) {
             _isFail = true;
-            StartCoroutine(UIManager.I.ActiveFailUI());
-            _isStopMovement = true;
         }
         
     }

@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour {
     public TMP_Text comboPointText;
     public GameObject comboParent;
     public GameObject pointParent;
+    private bool _isStopMovement = false;
 
     void Start() {
         I = this;
@@ -66,6 +67,11 @@ public class UIManager : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         failUI.SetActive(true);
         button.gameObject.SetActive(false);
+        _isStopMovement = true;
+    }
+
+    public bool IsStopMovement() {
+        return _isStopMovement;
     }
     
     public void SoundControl() {
